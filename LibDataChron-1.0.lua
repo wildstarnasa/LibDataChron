@@ -10,7 +10,6 @@ local Lib = APkg and APkg.tPackage or {}
 
 Lib.AttributeStorage, Lib.NameStorage, Lib.ProxyStorage = Lib.AttributeStorage or {}, Lib.NameStorage or {}, Lib.ProxyStorage or {}
 local AttributeStorage, NameStorage = Lib.AttributeStorage, Lib.NameStorage
-local callbacks
 
 Lib.domt = {
 	__metatable = "access denied",
@@ -23,10 +22,10 @@ Lib.domt.__newindex = function(self, key, value)
 	AttributeStorage[self][key] = value
 	local name = NameStorage[self]
 	if not name then return end
-	callbacks:Fire("LibDataChron_AttributeChanged", name, key, value, self)
-	callbacks:Fire("LibDataChron_AttributeChanged_"..name, name, key, value, self)
-	callbacks:Fire("LibDataChron_AttributeChanged_"..name.."_"..key, name, key, value, self)
-	callbacks:Fire("LibDataChron_AttributeChanged__"..key, name, key, value, self)
+	Event_FireGenericEvent("LibDataChron_AttributeChanged", name, key, value, self)
+	Event_FireGenericEvent("LibDataChron_AttributeChanged_"..name, name, key, value, self)
+	Event_FireGenericEvent("LibDataChron_AttributeChanged_"..name.."_"..key, name, key, value, self)
+	Event_FireGenericEvent("LibDataChron_AttributeChanged__"..key, name, key, value, self)
 end
 
 function Lib:NewDataObject(name, dataobj)
@@ -42,7 +41,7 @@ function Lib:NewDataObject(name, dataobj)
 	end
 	dataobj = setmetatable(dataobj or {}, self.domt)
 	self.ProxyStorage[name], self.NameStorage[dataobj] = dataobj, name
-	self.callbacks:Fire("LibDataChron_DataObjectCreated", name, dataobj)
+	Event_FireGenericEvent("LibDataChron_DataObjectCreated", name, dataobj)
 	return dataobj
 end
 
@@ -84,9 +83,6 @@ function Lib:OnDependencyError(strDep, strError)
 	return false
 end
 
-function Lib:OnLoad()
-	Lib.callbacks = Lib.callbacks or Apollo.GetPackage("Gemini:CallbackHandler-1:0").tPackage:New(Lib)
-	callbacks = Lib.callbacks
-end
+function Lib:OnLoad() end
 
-Apollo.RegisterPackage(Lib, MAJOR, MINOR, {"Gemini:CallbackHandler-1.0"})
+Apollo.RegisterPackage(Lib, MAJOR, MINOR, {})

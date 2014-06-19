@@ -2,16 +2,39 @@ LibDataChron
 ============
 
 LibDataChron is a Wildstar implementation of LibDataBroker
-This relies on [CallbackHandler](https://github.com/wildstarnasa/CallbackHandler)
+This relies on Carbine Events
 
 For the moment rough docs can be found at the original github site: [LibDataBroker](https://github.com/tekkub/libdatabroker-1-1)
 
-Callback names are:
+Event names and arguments are:
 `
+LibDataChron_DataObjectCreated
+* name
+* dataobj
+
 LibDataChron_AttributeChanged
-LibDataChron_AttributeChanged_
-LibDataChron_AttributeChanged_
-LibDataChron_AttributeChanged__
+* name
+* attr
+* value
+* dataobj
+
+LibDataChron_AttributeChanged_<name>
+* name
+* attr
+* value
+* dataobj
+
+LibDataChron_AttributeChanged_<name>_<key>
+* name
+* attr
+* value
+* dataobj
+
+LibDataChron_AttributeChanged__<key>
+* name
+* attr
+* value
+* dataobj
 `
 
 ```lua
