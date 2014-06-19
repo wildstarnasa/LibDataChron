@@ -8,7 +8,7 @@ For the moment rough docs can be found at the original github site: [LibDataBrok
 
 Event names and arguments are:
 
-`
+```lua
 LibDataChron_DataObjectCreated
 * name
 * dataobj
@@ -36,7 +36,7 @@ LibDataChron_AttributeChanged__<key>
 * attr
 * value
 * dataobj
-`
+```
 
 ```lua
 local ldc = Apollo.GetPackage("Lib:DataChron-1.0").tPackage
